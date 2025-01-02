@@ -41,10 +41,10 @@ _run_python_code() {
     python3${pVer%.*} -c "$1"
 }
 
-_run_catpack_git() {
+_run_zedpack_git() {
     $(_run_python_code 'from git import Repo
 import sys
-OFFICIAL_UPSTREAM_REPO = "https://github.com/modymesourceze/ZESOURCE"
+OFFICIAL_UPSTREAM_REPO = "https://github.com/modymesourceze/ELHYBA"
 ACTIVE_BRANCH_NAME = "SourceZe"
 repo = Repo.init()
 origin = repo.create_remote("temponame", OFFICIAL_UPSTREAM_REPO)
@@ -53,7 +53,7 @@ repo.create_head(ACTIVE_BRANCH_NAME, origin.refs[ACTIVE_BRANCH_NAME])
 repo.heads[ACTIVE_BRANCH_NAME].checkout(True) ')
 }
 
-_run_cat_git() {
+_run_zed_git() {
     local repolink=$(_get_repolink)
     $(_run_python_code 'from git import Repo
 import sys
@@ -69,21 +69,21 @@ repo.heads[ACTIVE_BRANCH_NAME].checkout(True) ')
 _set_bot () {
     local zippath
     zippath="SourceZe.zip"
-    echo "جاري تنزيل اكواد السورس "
+    echo "⌭ جاري تنزيل اكواد السورس ⌭"
     wget -q $(_get_ziplink) -O "$zippath"
-    echo " تفريغ البيانات "
-    CATPATH=$(zipinfo -1 "$zippath" | grep -v "/.");
+    echo "⌭ تفريغ البيانات ⌭"
+    ZEDPATH=$(zipinfo -1 "$zippath" | grep -v "/.");
     unzip -qq "$zippath"
-    echo " تم التفريغ "
-    echo " يتم التنظيف "
+    echo "⌭ تـم التفريـغ ⌭"
+    echo "⌭ يتم التنظيف ⌭"
     rm -rf "$zippath"
     sleep 5
-    _run_catpack_git
-    cd $CATPATH
-    _run_cat_git
+    _run_zedpack_git
+    cd $ZEDPATH
+    _run_zed_git
     python3 ../setup/updater.py ../requirements.txt requirements.txt
     chmod -R 755 bin
-    echo "    بدء تنزيل بيانات زد إي    "
+    echo "⌭ جـاري بـدء تنصيـب زد إي ⌭"
     echo "
 
     "
